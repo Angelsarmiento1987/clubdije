@@ -1,0 +1,26 @@
+{
+  "name": "el-club-del-dije",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node dev.mjs",
+    "build": "node build.mjs",
+    "test": "node --test tests/gifts.test.js tests/catalog-import.test.js tests/card-download.test.js tests/admin-access.test.js tests/package-qr.test.js",
+    "test:rules": "firebase emulators:exec --only firestore --project demo-club-dije \"node --test --test-concurrency=1 tests/firestore.rules.test.js\""
+  },
+  "dependencies": {
+    "firebase": "^12.19.0",
+    "qrcode": "^1.5.4",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^5.0.2",
+    "@napi-rs/canvas": "^1.1.0",
+    "esbuild": "0.25.0",
+    "firebase-tools": "^14.27.0",
+    "jsdom": "^26.1.0",
+    "jsqr": "^1.4.0"
+  }
+}

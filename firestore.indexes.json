@@ -1,0 +1,98 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "giftInvitations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "finalized",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "giftInvitations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "finalized",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "finalizedAt",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "giftTokenAdmin",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "state",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "confirmedAt",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "giftCards",
+      "fieldPath": "message",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "giftCards",
+      "fieldPath": "to",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "giftCards",
+      "fieldPath": "from",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "giftInvitations",
+      "fieldPath": "readCode",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "giftInvitations",
+      "fieldPath": "reference",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "giftTokens",
+      "fieldPath": "message",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "giftTokens",
+      "fieldPath": "to",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "giftTokens",
+      "fieldPath": "from",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "giftTokenAdmin",
+      "fieldPath": "code",
+      "indexes": []
+    },
+    {
+      "collectionGroup": "giftTokenAdmin",
+      "fieldPath": "reference",
+      "indexes": []
+    }
+  ]
+}

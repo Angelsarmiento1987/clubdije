@@ -1,0 +1,135 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function admin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+        && get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.enabled == true;
+    }
+    function hash(value) { return value is string && value.matches('^[a-f0-9]{64}$'); }
+    function openInvitation(data) {
+      return data.finalized == false && request.time < data.createdAt + duration.value(30, 'd');
+    }
+    function validText(value, max) {
+      return value is string && value.size() > 0 && value.size() <= max && !value.matches('^\\s*$');
+    }
+    function dedication(data) {
+      return validText(data.to,60) && validText(data.from,60) && validText(data.message,1200)
+        && data.message.matches('([^\\n]*\\n){0,23}[^\\n]*')
+        && data.model in ['boca','river','futbol','quince-rosa','quince-noche','medicina','cumpleanos','mama','papa','amor','pasion','docente','aurora','logro','aniversario','bebe','musica','mascotas','botanica','magia','club-neon'];
+    }
+    match /giftTokens/{tokenId} {
+      allow get: if admin() || resource.data.state == 'unused'
+        || (resource.data.state == 'confirmed' && request.time < resource.data.confirmedAt + duration.value(30,'d'));
+      allow list: if admin();
+      allow create: if admin() && hash(tokenId)
+        && request.resource.data.keys().hasAll(['state','createdAt'])
+        && request.resource.data.keys().hasOnly(['state','createdAt'])
+        && request.resource.data.state == 'unused' && request.resource.data.createdAt == request.time
+        && getAfter(/databases/$(database)/documents/giftTokenAdmin/$(tokenId)).data.state == 'unused'
+        && getAfter(/databases/$(database)/documents/giftTokenAdmin/$(tokenId)).data.createdAt == request.time;
+      allow update: if resource.data.state == 'unused'
+        && request.resource.data.keys().hasAll(['state','createdAt','confirmedAt','to','from','message','model'])
+        && request.resource.data.keys().hasOnly(['state','createdAt','confirmedAt','to','from','message','model'])
+        && request.resource.data.createdAt == resource.data.createdAt
+        && request.resource.data.state == 'confirmed' && request.resource.data.confirmedAt == request.time
+        && dedication(request.resource.data)
+        && getAfter(/databases/$(database)/documents/giftTokenAdmin/$(tokenId)).data.state == 'confirmed'
+        && getAfter(/databases/$(database)/documents/giftTokenAdmin/$(tokenId)).data.confirmedAt == request.time;
+      allow delete: if admin();
+    }
+    match /giftTokenAdmin/{tokenId} {
+      allow get, list: if admin();
+      allow create: if admin() && hash(tokenId)
+        && request.resource.data.keys().hasAll(['state','createdAt','reference','code'])
+        && request.resource.data.keys().hasOnly(['state','createdAt','reference','code'])
+        && request.resource.data.code is string && request.resource.data.code.matches('^[A-HJ-NP-Z2-9]{10}$')
+        && request.resource.data.reference is string && request.resource.data.reference.size() <= 80
+        && request.resource.data.state == 'unused' && request.resource.data.createdAt == request.time
+        && getAfter(/databases/$(database)/documents/giftTokens/$(tokenId)).data.state == 'unused'
+        && getAfter(/databases/$(database)/documents/giftTokens/$(tokenId)).data.createdAt == request.time;
+      allow update: if resource.data.state == 'unused'
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['state','confirmedAt'])
+        && request.resource.data.state == 'confirmed' && request.resource.data.confirmedAt == request.time
+        && getAfter(/databases/$(database)/documents/giftTokens/$(tokenId)).data.state == 'confirmed'
+        && getAfter(/databases/$(database)/documents/giftTokens/$(tokenId)).data.confirmedAt == request.time;
+      allow delete: if admin();
+    }
+    match /site/business {
+      allow get: if true;
+      allow list, delete: if false;
+      allow create, update: if admin()
+        && request.resource.data.keys().hasAll(['publicWebUrl'])
+        && request.resource.data.keys().hasOnly(['publicWebUrl'])
+        && request.resource.data.publicWebUrl is string
+        && request.resource.data.publicWebUrl.size() <= 300
+        && request.resource.data.publicWebUrl.matches('^https://[^\\s]+$');
+    }
+    match /site/catalog {
+      allow get: if true;
+      allow list, delete: if false;
+      allow create, update: if admin()
+        && request.resource.data.keys().hasAll(['products','updatedAt'])
+        && request.resource.data.keys().hasOnly(['products','updatedAt'])
+        && request.resource.data.products is list
+        && request.resource.data.products.size() > 0 && request.resource.data.products.size() <= 1000
+        && request.resource.data.updatedAt is string;
+    }
+    match /visits/{visitId} {
+      allow create: if visitId.matches('^[A-F0-9]{32}$')
+        && request.resource.data.keys().hasOnly(['createdAt'])
+        && request.resource.data.createdAt == request.time;
+      allow get, list: if admin();
+      allow update: if false;
+      allow delete: if admin();
+    }
+    match /admins/{uid} {
+      allow get: if request.auth != null && request.auth.uid == uid;
+      allow list, create, update, delete: if false;
+    }
+    match /giftInvitations/{inviteId} {
+      allow get: if admin() || openInvitation(resource.data);
+      allow list: if admin();
+      allow create: if admin() && hash(inviteId)
+        && request.resource.data.keys().hasAll(['readCode','readHash','reference','createdAt','finalized'])
+        && request.resource.data.keys().hasOnly(['readCode','readHash','reference','createdAt','finalized'])
+        && request.resource.data.readCode is string
+        && request.resource.data.readCode.matches('^[A-F0-9]{32}$')
+        && hash(request.resource.data.readHash)
+        && request.resource.data.reference is string && request.resource.data.reference.size() <= 80
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.finalized == false;
+      // El código de edición es una capacidad secreta, no un permiso para listar.
+      // La confirmación requiere crear la tarjeta de lectura en el mismo batch.
+      allow update: if openInvitation(resource.data)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['finalized','finalizedAt'])
+        && request.resource.data.finalized == true
+        && request.resource.data.finalizedAt == request.time
+        && getAfter(/databases/$(database)/documents/giftCards/$(resource.data.readHash)).data.invitationId == inviteId
+        && getAfter(/databases/$(database)/documents/giftCards/$(resource.data.readHash)).data.createdAt == request.time;
+      allow delete: if admin();
+    }
+    match /giftCards/{cardId} {
+      function validCard() {
+        let data = request.resource.data;
+        let invitation = get(/databases/$(database)/documents/giftInvitations/$(data.invitationId)).data;
+        let confirmed = getAfter(/databases/$(database)/documents/giftInvitations/$(data.invitationId)).data;
+        return hash(cardId) && hash(data.invitationId)
+          && data.keys().hasAll(['to','from','message','model','invitationId','createdAt'])
+          && data.keys().hasOnly(['to','from','message','model','invitationId','createdAt'])
+          && validText(data.to,60) && validText(data.from,60) && validText(data.message,1200)
+          && data.message.matches('([^\\n]*\\n){0,23}[^\\n]*')
+          && data.model in ['boca','river','futbol','quince-rosa','quince-noche','medicina','cumpleanos','mama','papa','amor','pasion','docente','aurora','logro','aniversario','bebe','musica','mascotas','botanica','magia','club-neon']
+          && data.createdAt == request.time
+          && openInvitation(invitation) && invitation.readHash == cardId
+          && confirmed.finalized == true && confirmed.finalizedAt == request.time;
+      }
+      allow get: if admin() || request.time < resource.data.createdAt + duration.value(30, 'd');
+      allow list: if admin();
+      allow create: if validCard();
+      allow update: if false;
+      allow delete: if admin();
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

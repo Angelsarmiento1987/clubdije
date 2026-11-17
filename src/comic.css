@@ -1,0 +1,414 @@
+:where(.comic-site, .comic-portal) {
+  --ink: #151624;
+  --paper: #fcfaf6;
+  --muted: #535568;
+  --line: #e9e4ef;
+  --accent: #5630c9;
+  --lime: #eeff9a;
+  --comic-lettering: DijeComic, DijeItalic, Impact, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: DijeBody, Arial, sans-serif;
+}
+
+.comic-site {
+  --ink: #f7f7ff;
+  --paper: #0b0c15;
+  --surface: #141626;
+  --muted: #b7b9d0;
+  --line: #2c2f46;
+  --accent: #b2a1ff;
+  --lime: #fff043;
+  color-scheme: dark;
+}
+.catalog-shell {
+  width: min(1450px, calc(100% - 48px)); margin: 18px auto 0;
+  display: grid; grid-template-columns: 180px minmax(0, 1fr); align-items: start; gap: 18px;
+}
+.catalog-shell main { min-width: 0; }
+.catalog-shell .comic-wrap { width: 100%; }
+.catalog-sidebar { position: sticky; top: 16px; display: grid; gap: 12px; }
+.catalog-side-nav {
+  display: grid; gap: 3px; width: auto; padding: 10px; border: 1px solid var(--line); border-radius: 15px; background: var(--surface);
+}
+.catalog-side-nav p { margin: 8px 6px 10px; color: var(--muted); font-size: 9px; font-weight: 850; letter-spacing: .12em; }
+.catalog-side-nav a, .catalog-side-nav > a:nth-child(2) {
+  display: flex; align-items: center; gap: 9px; min-height: 41px; padding: 6px 8px;
+  border-radius: 8px; color: var(--ink);
+}
+.catalog-side-nav a:hover { background: #22253c; color: var(--lime); }
+.catalog-side-nav svg { flex: none; width: 15px; fill: none; stroke: var(--accent); stroke-width: 1.7; stroke-linejoin: round; }
+.catalog-side-gift {
+  display: grid; justify-items: start; gap: 7px; padding: 13px;
+  border: 1px solid #3b345e; border-radius: 15px; background: radial-gradient(ellipse at top right, #45337e, #181a2d 70%);
+}
+.catalog-side-gift span { color: var(--lime); font-size: 21px; }
+.catalog-side-gift strong { font-size: 14px; }
+.catalog-side-gift a { color: var(--lime); font-size: 12px; font-weight: 750; }
+.catalog-side-gift a:hover { text-decoration: underline; }
+.catalog-side-social {
+  display: grid; justify-items: start; gap: 7px; padding: 13px;
+  border: 1px solid #493a53; border-radius: 15px;
+  background: radial-gradient(ellipse at 92% 0, #50314a, #191b2d 77%);
+  color: var(--ink);
+}
+.catalog-side-social:hover { border-color: #df98c1; }
+.catalog-side-social-icon {
+  display: grid; place-items: center; width: 31px; height: 31px; border-radius: 9px;
+  background: linear-gradient(145deg, #674ee9, #ae4080 58%, #ad4d2d); color: #fff;
+}
+.catalog-side-social-icon svg { width: 18px; height: 18px; }
+.catalog-side-social strong { font: 400 18px/1 var(--comic-lettering); letter-spacing: .04em; }
+.catalog-side-social-handle { font-size: 12px; font-weight: 750; color: #ffcee9; overflow-wrap: anywhere; }
+.catalog-side-whatsapp { border-color: #315447; background: radial-gradient(ellipse at 92% 0, #254c3f, #17232a 77%); }
+.catalog-side-whatsapp:hover { border-color: #91dcb3; }
+.catalog-side-whatsapp .catalog-side-social-icon { background: #087941; }
+.catalog-side-whatsapp .catalog-side-social-icon img { width: 18px; height: 18px; }
+.catalog-side-whatsapp .catalog-side-social-handle { color: #c0f7d5; }
+
+
+
+.comic-wrap { width: min(1220px, calc(100% - 80px)); margin-inline: auto; }
+.comic-site :is(a, button, input, select):focus-visible,
+.comic-portal :is(a, button, input, select, textarea):focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.comic-skip { color: #151624; position: absolute; top: 10px; left: 12px; z-index: 3; padding: 12px; background: var(--lime); transform: translateY(-150%); }
+.comic-skip:focus { transform: none; }
+.comic-header { background: #111320; border-bottom: 1px solid var(--line); }
+.comic-header-inner { width: min(1450px, calc(100% - 48px)); min-height: 66px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.comic-brand { display: block; flex: none; width: 118px; }
+.comic-brand svg { display: block; width: 100%; }
+.comic-nav { display: flex; width: auto; justify-content: flex-end; flex-wrap: wrap; gap: clamp(14px, 3vw, 42px); font-size: 14px; font-weight: 700; }
+.comic-nav > a:nth-child(2) { display: inline-flex; }
+.comic-nav > a:not(.comic-store):hover { color: var(--accent); }
+.comic-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 11px;
+  min-height: 46px; padding: 11px 19px; border: 1px solid transparent; border-radius: 9px;
+  background: #272a45; color: #fff; font-size: 14px; font-weight: 750; text-align: center;
+  line-height: 1.2; transition: background-color .18s ease, color .18s ease, transform .18s ease;
+}
+.comic-button:hover { color: #161426; background: var(--accent); transform: translateY(-2px); }
+.comic-button.comic-store { background: var(--lime); color: #181523; border-color: transparent; min-height: 41px; padding-inline: 15px; }
+.comic-button.comic-store:hover { background: #fff789; }
+
+.comic-hero {
+  position: relative; isolation: isolate; overflow: hidden; display: grid; align-items: center;
+  grid-template-columns: minmax(0, .93fr) minmax(0, 1.07fr); min-height: 338px;
+  border: 1px solid #343759; border-radius: 20px;
+  background: radial-gradient(ellipse at 82% 48%, #332752, #1a1a32 43%, #111321 74%);
+}
+.comic-hero-copy { min-width: 0; position: relative; z-index: 1; padding: clamp(18px, 2.1vw, 28px) clamp(21px, 3.1vw, 42px); }
+.comic-kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .13em; font-weight: 850; }
+/* Use the complete mark here. The navigation keeps the compact crop. */
+.comic-hero-logo {
+  display: block; width: clamp(135px, 13vw, 179px); max-width: 100%; height: auto;
+  /* Pivot between the first links of the illustrated chain. */
+  transform-origin: 25% 2%;
+  transform: rotate(-3deg); filter: drop-shadow(0 6px 14px #050615bb);
+  animation: logo-sway 4.8s ease-in-out both;
+}
+@keyframes logo-sway {
+  0%, 100% { transform: rotate(-3deg); }
+  24% { transform: rotate(1deg); }
+  48% { transform: rotate(-6deg); }
+  72% { transform: rotate(-1.5deg); }
+}
+.comic-hero h1 {
+  margin: 12px 0 12px; font: 400 clamp(42px, 4.35vw, 64px)/.98 var(--comic-lettering);
+  letter-spacing: .02em; text-transform: uppercase;
+  text-shadow: 2px 4px 0 #080818, 0 7px 19px #0808189c;
+}
+.comic-hero h1 em { font-style: normal; color: var(--lime); }
+.comic-hero p { max-width: 335px; margin: 0 0 19px; color: #d4d7ef; font-size: clamp(14px, 1.3vw, 17px); line-height: 1.48; }
+.comic-hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 14px; }
+.comic-hero .comic-primary { background: var(--lime); color: #171621; }
+.comic-hero .comic-primary:hover { background: #fff789; }
+.comic-gift-link { min-height: 42px; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 750; }
+.comic-gift-link:hover { color: var(--lime); }
+.catalog-tv {
+  position: relative; width: min(calc(100% - 24px), 470px); min-width: 0;
+  margin: 30px auto 23px; padding: 0 0 8px;
+}
+.catalog-tv-antenna {
+  position: absolute; left: 45%; bottom: calc(100% - 4px); width: 36px; height: 8px;
+  border-radius: 50% 50% 0 0; background: #8e899b;
+}
+.catalog-tv-antenna::before, .catalog-tv-antenna::after {
+  content: ''; position: absolute; bottom: 5px; left: 50%; width: 3px; height: 28px;
+  transform-origin: bottom; transform: rotate(-37deg); border-radius: 10px; background: #aaa9b5;
+}
+.catalog-tv-antenna::after { transform: rotate(52deg); height: 32px; }
+.catalog-tv-cabinet {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 56px; gap: 10px;
+  padding: clamp(8px, 1.45vw, 18px); border: 2px solid #120d15; border-radius: 21px;
+  background: linear-gradient(150deg, #d58d57, #a8563f 58%, #793932);
+  box-shadow: inset 0 0 0 2px #ffcea265, 0 6px 0 #0b0b14, 0 13px 24px #0a0a1477;
+}
+.catalog-tv-cabinet::before, .catalog-tv-cabinet::after {
+  content: ''; position: absolute; top: 100%; width: 14%; height: 8px; background: #151321; border-radius: 0 0 5px 5px;
+}
+.catalog-tv-cabinet::before { left: 13%; }
+.catalog-tv-cabinet::after { right: 13%; }
+.catalog-tv-main {
+  display: grid; min-width: 0; gap: 6px; padding: clamp(6px, 1.1vw, 12px); border-radius: 13px;
+  background: #24212c; box-shadow: inset 0 0 0 1px #5a484d;
+}
+.catalog-tv-header, .catalog-tv-caption { display: flex; align-items: center; justify-content: space-between; gap: 7px; }
+.catalog-tv-header strong { color: #ffdf79; font: 400 clamp(17px, 2vw, 27px)/1 var(--comic-lettering); letter-spacing: .06em; }
+.catalog-tv-header > span { color: #e6dbc9; font: 700 11px/1 monospace; white-space: nowrap; }
+.catalog-tv-screen {
+  position: relative; aspect-ratio: 4 / 3; overflow: hidden; isolation: isolate;
+  border: 3px solid #100f16; border-radius: 11% / 13%;
+  background: radial-gradient(ellipse at 50% 42%, #a8aab1, #656b78);
+}
+.catalog-tv-screen::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  box-shadow: inset 0 0 13px #28222942;
+  background: repeating-linear-gradient(transparent 0 3px, #18152606 3px 4px);
+}
+.catalog-tv-picture { position: absolute; inset: 0; display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center; }
+.comic-site .catalog-tv-picture:focus-visible { outline: 3px solid #805500; outline-offset: -5px; }
+/* Fill the screen with a soft copy, then fit the sharp photo and feather only its exposed edges. */
+.catalog-tv-backdrop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(24px); transform: scale(1.18); opacity: .76; }
+.catalog-tv-image {
+  position: relative; display: block; width: auto; height: auto; max-width: 100%; max-height: 100%;
+  object-fit: contain; mask-image: linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
+  animation: catalog-tv-tune .28s ease-out;
+}
+.catalog-tv-image[data-wide=true] { mask-image: linear-gradient(180deg, transparent, #000 13%, #000 87%, transparent); }
+@keyframes catalog-tv-tune { from { opacity: .35; } to { opacity: 1; } }
+.catalog-tv-fallback { color: #24212c; font-size: 13px; font-weight: 750; }
+.catalog-tv-caption { color: #fff5e6; font-size: 11px; line-height: 1.28; }
+.catalog-tv-caption span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.catalog-tv-count { flex: none; color: #e6cba8; font-size: 10px; }
+.catalog-tv-controls {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; padding: 6px 0;
+  border-radius: 9px; background: #4b3235; box-shadow: inset 0 0 0 1px #f4c1a140;
+}
+.catalog-tv-dial, .catalog-tv-play {
+  display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 2px solid #201a23;
+  border-radius: 50%; background: linear-gradient(145deg, #ffe4af, #be895c); color: #261a23;
+  box-shadow: 0 2px 0 #24171f; font-size: 19px; font-weight: 850; line-height: 1;
+}
+.catalog-tv-play { width: 25px; height: 25px; font-size: 12px; border-radius: 6px; }
+.catalog-tv-controls button:hover:not(:disabled) { background: #fff1cc; }
+.catalog-tv-speaker { width: 24px; height: 23px; background: repeating-linear-gradient(0deg, #251b23 0 2px, transparent 2px 5px); }
+.catalog-tv-light { width: 6px; height: 6px; border-radius: 50%; background: #fbe099; }
+.catalog-tv-light[data-playing=true] { background: #77efaa; box-shadow: 0 0 7px #77efaa; }
+.collection-section { margin-top: 20px; }
+.collection-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 11px; }
+.comic-site .collection-heading h2 { margin: 0; font-size: clamp(23px, 2.5vw, 35px); }
+.collection-heading > span { color: var(--muted); font-size: 11px; font-weight: 750; }
+.collection-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 9px; }
+.collection-tile {
+  min-width: 0; min-height: 132px; position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 3px;
+  padding: 10px; border: 1px solid #ffffff1f; border-radius: 13px; text-align: left; color: #fff;
+}
+.collection-tile::after {
+  content: ''; position: absolute; z-index: -1; inset: 0; opacity: .5; pointer-events: none;
+  background: radial-gradient(circle, #fff7 1px, transparent 1.5px) 0 0 / 7px 7px;
+  mask-image: linear-gradient(140deg, transparent 45%, #000);
+}
+.collection-tile[aria-pressed=true] { outline: 3px solid var(--accent); outline-offset: 2px; }
+.collection-boca { background: radial-gradient(ellipse at top, #284ac2, #151b38 76%); }
+.collection-river { background: radial-gradient(ellipse at top, #9e263d, #331823 76%); }
+.collection-quince { background: radial-gradient(ellipse at top, #7a42b1, #261a43 76%); }
+.collection-musica { background: radial-gradient(ellipse at top, #9d2e68, #32192f 76%); }
+.collection-natacion { background: radial-gradient(ellipse at top, #087f9a, #102939 76%); }
+.collection-colibries { background: radial-gradient(ellipse at top, #237c65, #152f2c 76%); }
+.collection-caption { font-size: 10px; font-weight: 750; letter-spacing: .025em; }
+.collection-art { width: 65px; height: 65px; align-self: center; object-fit: contain; filter: drop-shadow(0 5px 7px #170e363b); transform: rotate(-8deg); transition: transform .2s ease; }
+.collection-crest { padding: 3px; }
+.collection-tile:nth-child(even) .collection-art { transform: rotate(8deg); }
+.collection-tile:hover .collection-art { transform: rotate(0deg) scale(1.1); }
+.collection-name { display: flex; justify-content: space-between; align-items: center; gap: 2px; width: 100%; font: 400 clamp(15px, 1.6vw, 23px)/1.1 var(--comic-lettering); letter-spacing: .025em; }
+.collection-name span { font: 750 .65em DijeBody, Arial, sans-serif; }
+.collection-quick { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 17px; }
+.collection-quick strong { margin-right: 7px; font-size: 13px; }
+.collection-quick button { padding: 7px 13px; min-height: 36px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--ink); font-size: 12px; font-weight: 750; }
+.collection-quick button:hover, .collection-quick button[aria-pressed=true] { border-color: var(--accent); color: var(--accent); }
+
+.comic-catalog, .comic-gift-section, .comic-about { margin-top: clamp(36px, 4.6vw, 61px); }
+.comic-section-heading { display: flex; align-items: end; justify-content: space-between; gap: 10px 25px; margin-bottom: 24px; }
+.comic-site h2 {
+  font: 400 clamp(36px, 4.2vw, 61px)/1.01 var(--comic-lettering);
+  letter-spacing: .025em; margin: 8px 0 0;
+}
+.comic-nav a, .catalog-side-nav a, .comic-hero .comic-primary, .catalog-side-gift strong {
+  font: 400 17px/1.1 var(--comic-lettering); letter-spacing: .045em;
+}
+.comic-portal .gift-page-heading h1, .comic-portal .gift-complete h1 {
+  font-family: var(--comic-lettering); font-weight: 400; letter-spacing: .025em;
+}
+.comic-section-heading p { margin: 0; color: var(--muted); max-width: 310px; font-size: 14px; }
+.comic-kicker { color: var(--accent); }
+.comic-product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+
+.comic-filter-panel { padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; }
+.comic-filter-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+.comic-search, .comic-sort select {
+  min-width: 0; min-height: 46px; padding: 8px 13px; background: #1c1e31; border: 1px solid var(--line); border-radius: 12px; color: var(--ink);
+}
+.comic-search { flex: 1 1 235px; display: flex; align-items: center; gap: 10px; }
+.comic-search:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
+.comic-search svg { flex: none; width: 20px; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
+.comic-search input { flex: 1; min-width: 0; width: 100%; border: 0; background: transparent; outline: none; color: inherit; }
+.comic-search input:focus-visible { outline: none; }
+.comic-sort { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 750; }
+.comic-categories { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+.comic-categories button, .comic-clear-mood { background: #1c1e31; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; color: var(--ink); font-size: 12px; font-weight: 750; min-height: 36px; }
+.comic-categories button[aria-pressed=true], .comic-clear-mood { background: #302852; color: #e8dfff; border-color: #635092; }
+.comic-result-line { display: flex; align-items: center; flex-wrap: wrap; gap: 9px 12px; margin: 20px 0 14px; font-size: 13px; font-weight: 800; }
+.comic-result-line small { margin-left: auto; color: var(--muted); font-weight: 600; }
+.comic-product { min-width: 0; display: flex; flex-direction: column; overflow: hidden; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.comic-product-picture { position: relative; display: grid; place-items: center; aspect-ratio: 1 / .92; overflow: hidden; border-bottom: 1px solid var(--line); background: #f3f3f7; }
+.comic-product-picture img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 13px; mix-blend-mode: multiply; transition: transform .2s; }
+.comic-product-picture:hover img { transform: scale(1.05); }
+.comic-no-photo { padding: 15px; text-align: center; color: #535568; font-size: 13px; }
+.comic-picture-arrow { position: absolute; top: 9px; right: 9px; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #fff; color: #5630c9; font-weight: 850; }
+.comic-product-copy { display: flex; flex: 1; flex-direction: column; align-items: stretch; padding: 15px; }
+.comic-product-category { align-self: flex-start; color: var(--muted); font-size: 10px; letter-spacing: .07em; font-weight: 750; text-transform: uppercase; }
+.comic-product h3 { flex: 1; margin: 7px 0 14px; font-size: 15px; line-height: 1.36; overflow-wrap: anywhere; }
+.comic-product h3 a:hover, .comic-market-link:hover { text-decoration: underline; }
+.comic-button:is(.comic-whatsapp, .comic-market-link) {
+  min-height: 42px; justify-content: flex-start; gap: 8px; font-size: 12px; padding: 6px 9px; text-align: left;
+}
+.comic-button.comic-whatsapp { background: #183e2c; color: #c9ffe0; }
+.comic-button.comic-whatsapp:hover { background: #255840; }
+.comic-button.comic-market-link { margin-top: 8px; background: #ffe600; color: #1e234e; }
+.comic-button.comic-market-link:hover { background: #fff373; }
+.product-brand-icon { width: 25px; height: 25px; flex: none; object-fit: contain; }
+.comic-whatsapp .product-brand-icon { background: #087941; border-radius: 50%; padding: 4px; }
+.comic-empty { padding: 30px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); text-align: center; }
+.comic-empty h3 { margin-top: 0; }
+.comic-load { display: grid; justify-items: center; gap: 11px; margin-top: 26px; }
+
+.comic-gift-section .gift-studio {
+  display: block; padding: clamp(16px, 3.4vw, 45px);
+  color: #fff; background: radial-gradient(ellipse at top right, #302251 0, #17182d 52%);
+  border: 1px solid #4b416b; border-radius: 24px;
+}
+.gift-studio-top, .gift-studio-body {
+  display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(12px, 2vw, 24px);
+}
+.gift-studio-top { align-items: center; margin-bottom: clamp(18px, 3vw, 32px); }
+.gift-studio-body { align-items: start; }
+.comic-gift-section .comic-kicker { color: var(--lime); }
+.comic-gift-section .gift-intro h2 { font-size: clamp(33px, 5vw, 68px); margin: 9px 0 10px; line-height: .98; letter-spacing: .02em; }
+.comic-gift-section .gift-intro h2 span { color: #c5b3ff; }
+.comic-gift-section .gift-intro > p { color: #e2e2f2; line-height: 1.55; margin: 0; }
+.gift-studio-picker, .comic-gift-section .gift-showcase {
+  min-width: 0; padding: clamp(12px, 2vw, 22px); border: 1px solid #51496e; border-radius: 15px;
+}
+.gift-studio-picker { background: #1d1e35; }
+.gift-studio-label { font-size: 10px; font-weight: 850; color: #d2c8ff; letter-spacing: .12em; }
+.gift-studio-picker .story-picker { margin: 12px 0 0; }
+.gift-studio-picker .story-picker h3 { font-size: 15px; }
+.comic-gift-section .gift-showcase {
+  position: static; max-width: none; margin: 0;
+  background: radial-gradient(ellipse at 50% 45%, #6247a8, #262044 82%);
+}
+.gift-showcase-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+.gift-story-format { font-size: 10px; font-weight: 750; border: 1px solid #b4a5df; border-radius: 100px; padding: 4px 7px; white-space: nowrap; }
+.comic-gift-section .gift-showcase .story-card-frame { max-width: min(198px, 75%); }
+.gift-showcase-title { margin: 12px 0 0; text-align: center; font-size: 13px; font-weight: 750; }
+.comic-gift-section .gift-form { width: 100%; max-width: none; margin: 0; padding: 14px; gap: 9px; border: 1px solid #5c5278; border-radius: 14px; background: #242640; }
+.comic-gift-section .gift-form > .gift-notice { margin: 0; }
+.comic-gift-section .gift-form input { color: #151624; color-scheme: light; }
+.gift-studio-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 14px; }
+.gift-studio-foot p { color: #d4cfe8; margin: 0; font-size: 12px; }
+.comic-gift-section .gift-admin-link { color: #e2d8ff; margin: 0; }
+:where(.comic-site, .comic-portal) .story-card-frame { border-radius: 13px; box-shadow: 0 18px 42px #0909232e; }
+:where(.comic-site, .comic-portal) .gift-form :is(input, textarea) { border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+:where(.comic-site, .comic-portal) .button {
+  min-height: 44px; padding: 10px 17px; border-radius: 999px; border: 1px solid transparent;
+  background: var(--accent); color: #fff; font-weight: 750;
+}
+:where(.comic-site, .comic-portal) .button:hover:not(:disabled) { background: #1d268f; color: #fff; }
+:where(.comic-site, .comic-portal) .button.outline { background: #fff; color: var(--ink); border-color: var(--line); }
+:where(.comic-site, .comic-portal) .story-theme-tabs button { min-height: 36px; border: 1px solid var(--line); border-radius: 9px; background: #f6f2ff; color: #252039; }
+:where(.comic-site, .comic-portal) .story-theme-tabs button[aria-pressed=true] { background: var(--accent); color: #fff; border-color: var(--accent); }
+.comic-gift-section .story-theme-tabs button { background: #34304e; border-color: #696083; color: #fff; }
+.comic-gift-section .story-theme-tabs button:hover { border-color: #dbcbff; }
+.comic-gift-section .story-theme-tabs button[aria-pressed=true], .comic-gift-section .gift-form .button { background: var(--lime); border-color: var(--lime); color: #21252b; }
+.comic-gift-section .gift-form .button:hover:not(:disabled) { background: #d8f370; color: #21252b; }
+:where(.comic-site, .comic-portal) .story-option { border: 1px solid var(--line); border-radius: 12px; background: #fff; color: #252039; }
+:where(.comic-site, .comic-portal) .story-option[aria-pressed=true] { background: #edefff; border-color: var(--accent); }
+
+.comic-about { display: grid; grid-template-columns: 1fr 1.4fr; overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); margin-bottom: 68px; }
+.comic-about-art { display: grid; place-items: center; background: radial-gradient(ellipse at center, #3b3a73, #212343); padding: 24px; }
+.comic-about-art svg { width: min(100%, 285px); }
+.comic-about-copy { padding: clamp(23px, 4vw, 49px); }
+.comic-about-copy p { max-width: 510px; color: var(--muted); line-height: 1.65; }
+.comic-footer { padding-block: 8px; background: #111320; border-top: 1px solid var(--line); }
+.comic-footer-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 20px; }
+.comic-footer-brand { display: block; width: clamp(82px, 9vw, 106px); flex: none; }
+.comic-footer-logo { display: block; width: 100%; height: auto; transform-origin: 25% 2%; transform: rotate(-3deg); }
+.comic-footer-logo.is-swaying { animation: logo-sway 4.8s ease-in-out both; }
+.comic-footer a { font-size: 13px; font-weight: 750; }
+.comic-footer a:hover { color: var(--accent); }
+.comic-footer small { font-size: 11px; color: var(--muted); }
+
+.comic-portal .gift-portal-header, .comic-portal .gift-portal-footer { background: #fff; color: var(--ink); }
+.comic-portal .gift-portal-header { border-bottom: 1px solid var(--line); font-size: 13px; font-weight: 750; }
+.comic-portal .gift-portal-header svg { display: block; width: 105px; }
+.comic-portal .gift-portal-header a:last-child:hover { color: var(--accent); }
+.comic-portal .gift-portal-main { width: min(1100px, calc(100% - 36px)); }
+.comic-portal .gift-portal-footer { border-top: 1px solid var(--line); }
+.comic-portal .gift-page-heading, .comic-portal .gift-complete { padding: 24px; border-radius: 20px; background: #ebedff; }
+.comic-portal .gift-confirm { border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+.comic-portal .gift-envelope { border: 1px solid var(--line); border-radius: 20px; background: #ebedff; color: var(--ink); }
+
+@media (max-width: 1050px) {
+  .catalog-shell { width: calc(100% - 36px); grid-template-columns: minmax(0, 1fr); }
+  .catalog-sidebar { display: none; }
+  .collection-tile { padding: 11px; }
+  .comic-product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .comic-wrap { width: calc(100% - 36px); }
+  .comic-header-inner { min-height: 68px; padding-block: 8px; gap: 10px; }
+  .comic-brand { width: 84px; }
+  .comic-nav { gap: 2px 13px; font-size: 12px; }
+  .comic-nav a { min-height: 34px; display: inline-flex; align-items: center; }
+  .comic-nav .comic-store { min-height: 33px; padding: 5px 9px; font-size: 14px; }
+  .comic-nav a { font-size: 14px; }
+  .comic-hero { grid-template-columns: minmax(0, 1fr) minmax(0, .85fr); min-height: 240px; }
+  .comic-hero-copy { padding: 17px; }
+  .comic-hero h1 { font-size: clamp(34px, 6vw, 46px); margin-block: 9px; }
+  .comic-hero-logo { width: clamp(126px, 24vw, 173px); }
+  .comic-hero p { margin-bottom: 12px; }
+  .comic-hero-actions { gap: 1px 10px; }
+  .comic-hero .comic-primary { padding-inline: 10px; font-size: 15px; }
+  .catalog-tv-cabinet { grid-template-columns: minmax(0, 1fr) 38px; gap: 6px; }
+  .catalog-tv-dial { width: 27px; height: 27px; }
+  .collection-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .collection-grid { gap: 7px; }
+  .collection-tile { min-height: clamp(107px, 22vw, 175px); border-radius: 15px; padding: 8px; }
+  .collection-caption { font-size: 9px; }
+  .collection-art { width: clamp(47px, 12vw, 75px); height: clamp(47px, 12vw, 75px); }
+  .collection-name { font-size: clamp(15px, 4.3vw, 21px); }
+  .comic-section-heading { align-items: start; flex-direction: column; margin-bottom: 17px; }
+  .comic-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .comic-product { border-radius: 13px; }
+  .comic-product-copy { padding: 10px; }
+  .comic-product h3 { font-size: 13px; }
+  .comic-button:is(.comic-whatsapp, .comic-market-link) { font-size: 11px; gap: 5px; padding-inline: 6px; }
+  .product-brand-icon { width: 19px; height: 19px; }
+  .gift-studio-top, .gift-studio-body, .comic-about { grid-template-columns: 1fr; }
+  .comic-about-art svg { width: min(60%, 250px); }
+}
+@media (max-width: 470px) {
+  .comic-hero { grid-template-columns: minmax(0, 1fr); }
+  .catalog-tv { margin-block: 26px 19px; width: min(calc(100% - 26px), 390px); }
+  .comic-hero-copy { padding-bottom: 12px; }
+}
+@media (max-width: 370px) {
+  .collection-caption { display: none; }
+  .collection-tile { justify-content: flex-end; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .comic-site *, .comic-portal * { transition: none; }
+  .catalog-tv-image, .comic-hero-logo, .comic-footer-logo.is-swaying { animation: none; }
+}
