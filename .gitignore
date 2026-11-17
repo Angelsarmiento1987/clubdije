@@ -1,0 +1,10 @@
+node_modules/
+dist/
+public/assets/
+
+__pycache__/
+*.pyc
+
+*-debug.log
+.firebase/
+.env*
