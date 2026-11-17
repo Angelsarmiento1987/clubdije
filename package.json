@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node dev.mjs",
     "build": "node build.mjs",
+    "deploy": "gh workflow run catalogo-mensual.yml -f publication=solo-web",
     "test": "node --test tests/gifts.test.js tests/catalog-import.test.js tests/card-download.test.js tests/admin-access.test.js tests/package-qr.test.js",
     "test:rules": "firebase emulators:exec --only firestore --project demo-club-dije \"node --test --test-concurrency=1 tests/firestore.rules.test.js\""
   },

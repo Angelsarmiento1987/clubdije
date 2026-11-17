@@ -3,6 +3,14 @@ on:
   schedule:
     - cron: '23 11 1 * *' # Día 1 de cada mes, 08:23 Argentina (UTC-3)
   workflow_dispatch:
+    inputs:
+      publication:
+        description: 'Elegí si querés actualizar desde Mercado Libre antes de publicar'
+        type: choice
+        default: catalogo-y-web
+        options:
+          - catalogo-y-web
+          - solo-web
 permissions:
   contents: write
   pages: write
@@ -20,10 +28,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
+        if: github.event_name == 'schedule' || inputs.publication == 'catalogo-y-web'
         with:
           python-version: '3.12'
       - run: python -m unittest discover -s tests
+        if: github.event_name == 'schedule' || inputs.publication == 'catalogo-y-web'
       - name: Leer publicaciones (si falla, no altera la web publicada)
+        if: github.event_name == 'schedule' || inputs.publication == 'catalogo-y-web'
         run: python scripts/actualizar_catalogo.py
       - uses: actions/setup-node@v4
         with:
@@ -32,6 +43,7 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm run build
       - name: Guardar catálogo en el repositorio
+        if: github.event_name == 'schedule' || inputs.publication == 'catalogo-y-web'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

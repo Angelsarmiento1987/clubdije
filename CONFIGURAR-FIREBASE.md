@@ -9,7 +9,7 @@ En Firebase Console → proyecto el-club-del-dije → Firestore Database → Cre
 ## 2. Habilitar Google
 
 1. Authentication → Sign-in method → **Google** → Enable. Seleccioná el correo de soporte y guardá.
-2. En Authentication → Settings → Authorized domains, agregá el dominio de tu web (por ejemplo, `angelsarmiento1987.github.io` o tu dominio propio). Se agrega solo el dominio, sin `https://` ni rutas.
+2. En Authentication → Settings → Authorized domains, agregá `www.elclubdeldije.com.ar`. Para entrar también desde la dirección de GitHub Pages, agregá el host `github.io` de tu cuenta u organización. Escribí solo el dominio, sin `https://` ni rutas.
 3. Para probar en tu computadora, agregá `localhost` si no está habilitado.
 
 No habilites correo/contraseña ni usuarios anónimos para esta versión. No se necesita una cuenta de servicio.
@@ -110,10 +110,9 @@ Los nombres admiten hasta 60 caracteres y el mensaje hasta 1200 caracteres/24 re
 npm run build
 ```
 
-Publicá todo `dist/` en tu hosting HTTPS. Incluye `index.html`, assets y `404.html`.
+Para GitHub Pages, seguí los pasos de `npm run deploy` en el README. Para otros hostings, publicá todo `dist/` en tu hosting HTTPS.
 
-- Un hosting con reglas de SPA debe devolver `index.html` para `/superadmin`.
-- En GitHub Pages, `404.html` carga la misma app para que funcione la ruta directa. La página puede conservar el estado HTTP 404 del hosting, aunque la interfaz funcione. Los archivos usan una base calculada para admitir `/superadmin`, `/superadmin/` y repositorios con subcarpetas.
+- La compilación incluye `superadmin/index.html` para que GitHub Pages sirva el panel en `/superadmin/`. Los archivos usan una base calculada para admitir `/superadmin`, `/superadmin/` y repositorios con subcarpetas.
 - El enlace a Administración de tarjetas de la web lleva a /superadmin.
 
 Las tarjetas nuevas usan el fragmento `#tarjeta=CODIGO` sobre la URL del catálogo; el estado decide si se abre el editor o el visor. Los enlaces generados desde /superadmin vuelven a la raíz de la web para abrir la tarjeta, no al panel.

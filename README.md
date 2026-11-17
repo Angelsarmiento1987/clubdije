@@ -9,7 +9,36 @@ npm install
 npm start
 ```
 
-Abrí http://localhost:3000. Para publicar: `npm run build` y subí el contenido de `dist/` a tu hosting. El ZIP incluye una compilación en `dist/`. Los enlaces de archivos son relativos y permiten publicar en una subcarpeta de GitHub Pages.
+Abrí http://localhost:3000. El ZIP incluye una compilación en `dist/`. Los enlaces de archivos son relativos y permiten publicar en una subcarpeta de GitHub Pages.
+
+## Publicar en GitHub Pages
+
+1. Guardá y subí estos cambios a la rama predeterminada de tu repositorio, incluido `.github/workflows/catalogo-mensual.yml`.
+2. En **Settings → Pages → Build and deployment**, elegí **GitHub Actions** como origen. En **Custom domain**, guardá `www.elclubdeldije.com.ar`.
+3. Instalá [GitHub CLI](https://cli.github.com/) si hace falta. En Windows podés usar `winget install --id GitHub.cli` y volver a abrir la terminal. Desde la carpeta de tu repositorio, ejecutá:
+
+   ```sh
+   gh auth login
+   npm run deploy
+   ```
+
+`npm run deploy` inicia el flujo de GitHub Actions para compilar y publicar la última versión subida a la rama predeterminada, con el catálogo incluido en ese commit. Podés ver el resultado en **Actions → Actualizar catálogo y publicar**. Para próximas publicaciones, subí primero tus cambios con Git y volvé a ejecutar `npm run deploy`.
+
+### Conectar el dominio en DonWeb
+
+Si DonWeb administra los nameservers del dominio, entrá a **Mis Servicios → Dominios → Gestionar → Nameservers y Zona DNS**. En la zona DNS, agregá o actualizá estos registros. Si ya hay un registro web para `www` o para la raíz, revisalo antes de agregar uno que entre en conflicto. Conservá los registros de correo.
+
+| Tipo | Nombre | Destino |
+| --- | --- | --- |
+| CNAME | `www` | `<dueño-del-repo>.github.io` |
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+
+Reemplazá `<dueño-del-repo>` por el usuario u organización que figura en la URL del repositorio. Usá únicamente el host `github.io` en el destino. Los registros A permiten que GitHub Pages redirija `elclubdeldije.com.ar` a `www.elclubdeldije.com.ar`. Cuando GitHub valide el dominio y emita el certificado, activá **Enforce HTTPS** en **Settings → Pages**. Consultá las guías de [DonWeb](https://soporte.donweb.com/es/articles/15901641-dominios-y-zona-dns-gestionar-la-zona-dns-de-tu-dominio) y [GitHub Pages](https://docs.github.com/es/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site).
+
+En Firebase Authentication, agregá `www.elclubdeldije.com.ar` a **Authorized domains** para entrar a `/superadmin/` con Google. En **Superadmin → Tarjetas**, guardá `https://www.elclubdeldije.com.ar/` como dirección pública para los nuevos QR.
 
 ## Cambios incluidos
 
@@ -22,7 +51,7 @@ Abrí http://localhost:3000. Para publicar: `npm run build` y subí el contenido
 
 ## Actualización mensual preparada para GitHub Pages
 
-El archivo `.github/workflows/catalogo-mensual.yml` intenta actualizar el catálogo y publicar la web el día 1 de cada mes, a las 08:23 de Argentina. También se puede ejecutar manualmente desde Actions → Actualizar catálogo y publicar → Run workflow.
+El archivo `.github/workflows/catalogo-mensual.yml` intenta actualizar el catálogo y publicar la web el día 1 de cada mes, a las 08:23 de Argentina. Para pedir una actualización manual, entrá a **Actions → Actualizar catálogo y publicar → Run workflow** y elegí `catalogo-y-web`.
 
 **Todavía no está activado ni probado en tu repositorio.** Para activarlo:
 
@@ -43,7 +72,7 @@ Si hay error de red, una página sin productos, paginación repetida, una public
 
 La fecha de actualización solo cambia tras completar una importación válida. Los nuevos productos se agregan; los existentes se actualizan sin cambiar sus categorías manuales. **No se eliminan automáticamente publicaciones anteriores**, porque el catálogo no representa stock en vivo. Disponibilidad y variantes se consultan por WhatsApp o en ML.
 
-Si alojás la web fuera de GitHub Pages, reemplazá los pasos de publicación del workflow por los de tu hosting; guardar el JSON por sí solo no actualiza otro hosting.
+Si alojás la web fuera de GitHub Pages, ejecutá `npm run build` y subí el contenido de `dist/` a ese hosting. Para automatizarlo, adaptá los pasos de publicación del workflow a tu proveedor.
 
 ### Alternativa manual sin API
 
@@ -54,7 +83,7 @@ python scripts/actualizar_catalogo.py --html pagina1.html pagina2.html pagina3.h
 npm run build
 ```
 
-Pasá todas las páginas, aunque cambie la cantidad de páginas del listado. El importador admite las estructuras públicas `poly-card` y `ui-search-layout__item`; si el HTML guardado no contiene esas estructuras, falla sin tocar los datos. Los tests usan ejemplos de esas estructuras, no una prueba contra el listado actual de ML. Después subí el catálogo actualizado al repositorio y publicá el nuevo `dist/` según tu hosting.
+Pasá todas las páginas, aunque cambie la cantidad de páginas del listado. El importador admite las estructuras públicas `poly-card` y `ui-search-layout__item`; si el HTML guardado no contiene esas estructuras, falla sin tocar los datos. Los tests usan ejemplos de esas estructuras, no una prueba contra el listado actual de ML. Después subí el catálogo actualizado al repositorio y ejecutá `npm run deploy`.
 
 También podés editar directamente `src/productos.json`: cada producto lleva `id`, `title`, `category`, `image` y `url`; no lleva precio. Cambiá `updatedAt` solo al renovar realmente el catálogo.
 
